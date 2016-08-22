@@ -1,6 +1,8 @@
 package com.example.android.theworkoutapp;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.app.ListFragment;
@@ -8,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 /**
@@ -15,6 +18,11 @@ import android.widget.ArrayAdapter;
  */
 public class WorkoutListFragment extends ListFragment {
 
+    interface WorkoutListListener{
+        void itemClicked(long id);
+    }
+
+    private WorkoutListListener listener;
 
     public WorkoutListFragment() {
         // Required empty public constructor
@@ -39,4 +47,17 @@ public class WorkoutListFragment extends ListFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
+    @Override
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+        this.listener = (WorkoutListListener)activity;
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        if (listener!= null){
+            listener.itemClicked(id);
+        }
+    }
 }
