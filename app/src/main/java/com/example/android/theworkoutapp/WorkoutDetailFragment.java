@@ -1,6 +1,7 @@
 package com.example.android.theworkoutapp;
 
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,6 +32,13 @@ public class WorkoutDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         if (savedInstanceState != null) {
             workoutID = savedInstanceState.getLong("workoutId");
+        }else {
+            StopwatchFragment stopwatchFragment = new StopwatchFragment();
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            ft.replace(R.id.stopwatch_container, stopwatchFragment);
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
         }
         return inflater.inflate(R.layout.fragment_workout_detail, container, false);
     }
